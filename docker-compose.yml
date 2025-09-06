@@ -11,6 +11,7 @@ services:
       - "127.0.0.1:8090:8090"
     networks:
       - mon
+      - nginx-proxy-manager_frontend
     restart: unless-stopped
 
   beszel-agent:
@@ -30,6 +31,9 @@ services:
 
 networks:
   mon:
+    driver: bridge
+  nginx-proxy-manager_frontend:
+    external: true
     driver: bridge
 
 volumes:
