@@ -8,10 +8,11 @@ services:
       - beszel-data:/beszel_data
       - ./beszel_socket:/beszel_socket
       - /etc/timezone:/etc/timezone:ro
+    environment:
+      - APP_URL=${BESZEL_APP_URL}
     ports:
       - "127.0.0.1:8090:8090"
     networks:
-      - mon
       - nginx-proxy-manager_frontend
     restart: unless-stopped
     labels:
@@ -20,11 +21,13 @@ services:
   beszel-agent:
     image: henrygd/beszel-agent:${BESZEL_VERSION}
     container_name: beszel-agent
+    depends_on:
+      - beszel
     volumes:
       - beszel-agent-data:/var/lib/beszel-agent
       - ./beszel_socket:/beszel_socket
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - /etc/hostname:/etc/hostname:ro
+      - /etc/timezone:/etc/timesone:ro
     environment:
       - LISTEN=/beszel_socket/beszel.sock
       - HUB_URL=http://localhost:8090
@@ -36,8 +39,6 @@ services:
       - wud.tag.include=^\d+\.\d+\.\d+$$
 
 networks:
-  mon:
-    driver: bridge
   nginx-proxy-manager_frontend:
     external: true
     driver: bridge

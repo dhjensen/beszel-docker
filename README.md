@@ -1,6 +1,6 @@
 # beszel-docker
 
-Work in progress for using beszel.
+My [beszel](https://www.beszel.dev/) docker compose
 
 ## .env example
 
@@ -8,4 +8,5 @@ Work in progress for using beszel.
 BESZEL_VERSION=version
 BESZEL_KEY=ssh public key
 BESZEL_TOKEN=token
+BESZEL_APP_URL=https://url
 ```
