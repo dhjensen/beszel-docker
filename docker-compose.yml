@@ -14,9 +14,12 @@ services:
       - "127.0.0.1:8090:8090"
     networks:
       - nginx-proxy-manager_frontend
+      - backend
     restart: unless-stopped
     labels:
       - wud.tag.include=^\d+\.\d+\.\d+$$
+      - traefik.enable=true
+      - traefik.http.routers.beszel-beszel-docker.rule=Host(`beszel.dhjensen.tech`)
 
   beszel-agent:
     image: henrygd/beszel-agent:${BESZEL_VERSION}
@@ -37,8 +40,12 @@ services:
     restart: unless-stopped
     labels:
       - wud.tag.include=^\d+\.\d+\.\d+$$
+      - traefik.enable=false
 
 networks:
+  backend:
+    driver: bridge
+    external: true
   nginx-proxy-manager_frontend:
     external: true
     driver: bridge
