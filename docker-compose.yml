@@ -11,7 +11,7 @@ services:
     environment:
       - APP_URL=${BESZEL_APP_URL}
     ports:
-      - "127.0.0.1:8090:8090"
+      - '127.0.0.1:8090:8090'
     networks:
       - backend
     restart: unless-stopped
